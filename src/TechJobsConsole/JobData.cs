@@ -49,18 +49,46 @@ namespace TechJobsConsole
             {
                 string aValue = row[column];
 
-                if (aValue.Contains(value))
+                if (aValue.ToLower().Contains(value.ToLower()))
                 {
                     jobs.Add(row);
+                   
                 }
             }
 
             return jobs;
         }
 
+        public static List<Dictionary<string, string>> FindByValue(string value)
+        {
+            LoadData();
+
+            List<Dictionary<string, string>> results = new List<Dictionary<string, string>>();
+            
+            foreach (Dictionary<string, string> jobInfo in AllJobs)
+            {
+                 foreach (string info in jobInfo.Values)
+                {
+                    if (info.ToLower().Contains(value.ToLower()))
+
+                     {
+                        if (!results.Contains(jobInfo))
+                        results.Add(jobInfo);
+                    }
+                }   
+               
+            }
+            
+            return results;
+        }
+        
+
         /*
          * Load and parse data from job_data.csv
+         
          */
+
+
         private static void LoadData()
         {
 
